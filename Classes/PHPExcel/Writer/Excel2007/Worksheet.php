@@ -1114,7 +1114,7 @@ class PHPExcel_Writer_Excel2007_Worksheet extends PHPExcel_Writer_Excel2007_Writ
                         break;
                     case 'f':            // Formula
                         $attributes = $pCell->getFormulaAttributes();
-                        if ($attributes['t'] == 'array') {
+                        if (isset($attributes['t']) && $attributes['t'] == 'array') {
                             $objWriter->startElement('f');
                             $objWriter->writeAttribute('t', 'array');
                             $objWriter->writeAttribute('ref', $pCellAddress);
@@ -1125,18 +1125,18 @@ class PHPExcel_Writer_Excel2007_Worksheet extends PHPExcel_Writer_Excel2007_Writ
                         } else {
                             $objWriter->writeElement('f', substr($cellValue, 1));
                         }
-                        if ($this->getParentWriter()->getOffice2003Compatibility() === false) {
-                            if ($this->getParentWriter()->getPreCalculateFormulas()) {
-//                                $calculatedValue = $pCell->getCalculatedValue();
-                                if (!is_array($calculatedValue) && substr($calculatedValue, 0, 1) != '#') {
-                                    $objWriter->writeElement('v', PHPExcel_Shared_String::FormatNumber($calculatedValue));
-                                } else {
-                                    $objWriter->writeElement('v', '0');
-                                }
-                            } else {
-                                $objWriter->writeElement('v', '0');
-                            }
-                        }
+//                        if ($this->getParentWriter()->getOffice2003Compatibility() === false) {
+//                            if ($this->getParentWriter()->getPreCalculateFormulas()) {
+////                                $calculatedValue = $pCell->getCalculatedValue();
+//                                if (!is_array($calculatedValue) && substr($calculatedValue, 0, 1) != '#') {
+//                                    $objWriter->writeElement('v', PHPExcel_Shared_String::FormatNumber($calculatedValue));
+//                                } else {
+//                                    $objWriter->writeElement('v', '0');
+//                                }
+//                            } else {
+//                                $objWriter->writeElement('v', '0');
+//                            }
+//                        }
                         break;
                     case 'n':            // Numeric
                         // force point as decimal separator in case current locale uses comma
